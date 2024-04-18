@@ -2,17 +2,25 @@
   border-radius: 20px;
   box-shadow: -3px 3px 20px -5px rgba(0,0,0,0.75);
   padding: 10px;
+  background-color: rgb(255, 166, 0);
+  text-transform: capitalize;
 
   .namePokemon{
     text-align: center;
+    
   }
 
   img{
     width: 200px;
+    height: 200px;
   }
 
   ul{
     list-style: none;
+    background-color: white;
+    padding: 5px 15px;
+    min-height: 60px;
+    border-radius: 10px;
   }
 
 }

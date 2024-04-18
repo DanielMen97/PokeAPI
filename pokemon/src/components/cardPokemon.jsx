@@ -1,33 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import styles from './styles.module.scss'
-import pokemon from '../assets/img-test/1.png'
 
-const CardPokemon = (params) => {
-  const [namePokemon, setNamePokemon] = useState([]);
-  const [imagen, setImagen] = useState('');
-  const [types, setTypes] = useState([])
+const CardPokemon = ({pokemons}) => {
+const [pokemon, setPokemon] = useState({});
+const [imagen, setImagen] = useState('');
+
   useEffect(() =>{
-    getPokemon()
+    
+    fetch(pokemons.url, {method: 'GET'})
+      .then(response => response.json())
+      .then(data => {
+        setPokemon(data);
+        setImagen(data.sprites.other.dream_world.front_default);
+      })
   }, [])
 
-  const getPokemon = async() =>{
-    const url = params.pokemon.url;
-    fetch(url)
-      .then(resp => resp.json())
-      .then(data => {
-        setNamePokemon(data.name);
-        setImagen(data.sprites.other.dream_world.front_default);
-        setTypes(data.types)
-      })
-  }
+  console.log(pokemon.sprites.other)
 
   return (
     <div className={styles.cardContent}>
-      <h1 className={styles.namePokemon}>{namePokemon}</h1>
-      <img src={imagen}></img>
+      <h1 className={styles.namePokemon}>{pokemon.name}</h1>
+      {/* <img src={pokemon.sprites.other.dream_world.front_default}></img> */}
       <ul>
         {
-          types.map((item, id) =>(
+          pokemon.types?.map((item, id) =>(
             <li key={id}>
               {item.type.name}
             </li>
