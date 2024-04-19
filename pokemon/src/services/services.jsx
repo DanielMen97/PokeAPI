@@ -4,7 +4,7 @@ const getPokemonData = (url) => {
 }
 
 const getPokemons = () => {
-  return fetch(`https://pokeapi.co/api/v2/pokemon?offset=50&limit=90`, {method: 'GET'})
+  return fetch(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=24`, {method: 'GET'})
     .then(response => response.json())
     .then((data) => {
       const pokemonUrl = data.results.map(item => item.url)
