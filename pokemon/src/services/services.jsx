@@ -1,25 +1,21 @@
-export const getPokemons = () => {
-
-  return fetch(`https://pokeapi.co/api/v2/pokemon?offset=10&limit=30`, {method: 'GET'})
-  .then(response => response.json())
-}
-
-export const getPokemonData = (url) => {
+const getPokemonData = (url) => {
   return fetch(url, {method: 'GET'})
   .then(response => response.json())
 }
 
-export const createPokemon = (item) => {
-  getPokemonData(item.url)
-    .then(data => data)
+const getPokemons = () => {
+  return fetch(`https://pokeapi.co/api/v2/pokemon?offset=10&limit=30`, {method: 'GET'})
+    .then(response => response.json())
+    .then((data) => {
+      const pokemonUrl = data.results.map(item => item.url)
+      return pokemonUrl;
+    })
 }
 
-const prueba = fetch('https://pokeapi.co/api/v2/pokemon?limit=2')
-  .then(response => response.json())
-  .then(data => { 
-      data.results.map((item) =>{
-      fetch(item.url)
-        .then(response => response.json())
-        .then(dato => console.log(dato))
-  })
-})
+export const arrayPokemonData = async () => {
+  const pokemonUrl = await getPokemons();
+  const pokemonData = await Promise.all(
+    pokemonUrl.map(url => getPokemonData(url))
+  )
+  return pokemonData
+}
