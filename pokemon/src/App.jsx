@@ -17,7 +17,7 @@ const App = () => {
 
   return (
     <div className={styles.app}>
-      <h1 className={styles.tittle}>POKEMON</h1>
+      <img className={styles.tittle} src='.\src\assets\img\logo.png'/>
       <div className={styles.pokeContainer}>
          {
           info?.map((item, id) =>(

@@ -10,7 +10,7 @@
     
   }
 
-  img{
+  .imagePokemon{
     width: 200px;
     height: 200px;
   }
@@ -20,7 +20,16 @@
     background-color: white;
     padding: 5px 15px;
     min-height: 60px;
-    border-radius: 10px;
+    border-radius: 20px;
+
+    li{
+      display: flex;
+      gap: 10px;
+
+      img{
+        width: 20px;
+      }
+    }
   }
 
 }

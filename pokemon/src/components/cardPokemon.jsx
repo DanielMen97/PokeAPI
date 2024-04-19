@@ -11,6 +11,7 @@ const CardPokemon = ({pokemon}) => {
         {
           pokemon.types.map((item, id) =>(
             <li key={id}>
+              <img src={`./src/assets/img/icon/${item.type.name}.svg`}></img>
               {item.type.name}
             </li>
           ))
