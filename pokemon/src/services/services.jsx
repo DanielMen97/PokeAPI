@@ -19,3 +19,15 @@ export const arrayPokemonData = async () => {
   )
   return pokemonData
 }
+
+export const getSearchPokemon = async (id) => {
+  const allPokemons = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=1302`)
+  const response = await allPokemons.json();
+  const promises = response.results.map(async(item) => {
+    const res = await fetch(item.url);
+    const data = await res.json()
+    return data
+  })
+  const results = await Promise.all(promises)
+  return results
+  }

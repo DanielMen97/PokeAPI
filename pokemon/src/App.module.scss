@@ -11,10 +11,25 @@ body{
   gap: 30px;
   padding: 30px;
   
-  .tittle{
-    width: 400px;
-  }
+  .headerApp{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    
 
+    .tittle{
+      width: 400px;
+    }
+    .searchPokemon{
+      padding: 15px;
+      border: none;
+      outline: 0;
+      font-size: 17px;
+      border-radius: 20px;
+    }
+  }
+  
   .pokeContainer{
     display: grid;
     grid-template-columns: repeat(6, 1fr);
