@@ -16,18 +16,37 @@ body{
     justify-content: space-around;
     align-items: center;
     width: 100%;
-    
 
     .tittle{
       width: 400px;
     }
-    .searchPokemon{
-      padding: 15px;
-      border: none;
-      outline: 0;
-      font-size: 17px;
-      border-radius: 20px;
+
+    .inputContainer{
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+
+      .searchPokemon, select{
+        padding: 15px;
+        border: none;
+        outline: 0;
+        font-size: 17px;
+        border-radius: 20px;
+      }
+      .buttonSearch{
+        background-color: #0d6efd;
+        padding: 10px 15px;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+  
+        &:hover{
+          background-color: #4a92fe;
+        }
+      }
     }
+    
   }
   
   .pokeContainer{

@@ -20,14 +20,25 @@ export const arrayPokemonData = async () => {
   return pokemonData
 }
 
-export const getSearchPokemon = async (id) => {
-  const allPokemons = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=1302`)
-  const response = await allPokemons.json();
-  const promises = response.results.map(async(item) => {
-    const res = await fetch(item.url);
-    const data = await res.json()
+export const handleSearch = async (searchPokemon, setInfo) => {
+if(searchPokemon === ""){
+  alert("Ingrese nombre o numero del Pokemon que desea consultar")
+} else{
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchPokemon}`, { method: 'GET' })
+    try {
+      const data = await response.json()
+      const pokemon = []
+      pokemon.push(data)
+      setInfo(pokemon)
+    } catch (error) {
+      alert("El Pokemon no existe")
+    }
+}
+}
+
+export const listTypePokemon = async () => {
+  const response = await fetch(`https://pokeapi.co/api/v2/type/`, {method: 'GET'})
+    const data = await response.json()
+      .then(data => data.results)
     return data
-  })
-  const results = await Promise.all(promises)
-  return results
-  }
+}
