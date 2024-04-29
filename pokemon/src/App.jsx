@@ -1,13 +1,15 @@
 import { React, useEffect, useState } from 'react'
 import styles from './App.module.scss'
 import CardPokemon from './components/cardPokemon'
-import { arrayPokemonData, handleSearch, listTypePokemon} from './services/services'
+import { arrayPokemonData, getSearchPokemon, getListTypePokemon, getTypeSelect} from './services/services'
 
 const App = () => {
 
   const [info, setInfo] = useState([])
   const [searchPokemon, setSearchPokemon] = useState("")
   const [optionsSelect, setOptionsSelect] = useState([])
+  const [selectValue, setSelectValue] = useState("")
+  const [homeBack, setHomeBack] = useState(false)
 
   useEffect(() => {
     const getArrayPokemon = async () => {
@@ -16,14 +18,18 @@ const App = () => {
     }
     getArrayPokemon();
     const getOptionsSelect = async () => {
-      const listType = await listTypePokemon()
+      const listType = await getListTypePokemon()
       setOptionsSelect(listType)
     }
     getOptionsSelect();
-  }, [])
+  }, [homeBack])
 
-  const handleInputChange = (event) => {
-    setSearchPokemon(event)
+  const handleInput = (event) => {
+    const textPokemon = event.target.value
+    setSearchPokemon(textPokemon.toLowerCase())
+  }
+  const handleSelect = (event) => {
+    setSelectValue(event.target.value)
   }
 
   return (
@@ -31,14 +37,14 @@ const App = () => {
       <header className={styles.headerApp}>
         <img className={styles.tittle} src='.\src\assets\img\logo.png' />
         <div className={styles.inputContainer}>
-          <input className={styles.searchPokemon} placeholder='Buscar Pokemon...' onChange={() => (handleInputChange(event.target.value))}/>
-          <button className={styles.buttonSearch} onClick={() =>{handleSearch(searchPokemon, setInfo)}}>
+          <input className={styles.searchPokemon} placeholder='Buscar Pokemon...' onChange={handleInput}/>
+          <button className={styles.buttonSearch} onClick={() =>{getSearchPokemon(searchPokemon, setInfo)}}>
             <img style={{width: '20px'}} src='.\src\assets\img\search.svg'/>
           </button>
         </div>
         <div className={styles.inputContainer}>
-        <select>
-          <option hidden selected>
+        <select onChange={handleSelect}>
+          <option hidden defaultValue={null}>
             Selecione el tipo de Pokemon:
           </option>
           {
@@ -49,7 +55,7 @@ const App = () => {
             ))
           }
         </select>
-        <button className={styles.buttonSearch}>
+        <button className={styles.buttonSearch} onClick={() =>(getTypeSelect(selectValue, setInfo))}>
           <img style={{width: '20px'}} src='.\src\assets\img\search.svg'  />
         </button>
         </div>
@@ -62,6 +68,8 @@ const App = () => {
           ))
         }
       </div>
+      <button className={styles.buttonNav} onClick={() => setHomeBack(!homeBack)}>Volver</button>
+      <button className={styles.buttonNav}>Ver mas Pokemones</button>
     </div>
   )
 }

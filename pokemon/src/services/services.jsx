@@ -1,17 +1,18 @@
-const getPokemonData = (url) => {
-  return fetch(url, {method: 'GET'})
-  .then(response => response.json())
+//Funcion retorna la info de cada Pokemon
+const getPokemonData = async (url) => {
+  const response = await fetch(url, { method: 'GET' })
+  return await response.json()
 }
 
-const getPokemons = () => {
-  return fetch(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=24`, {method: 'GET'})
-    .then(response => response.json())
-    .then((data) => {
-      const pokemonUrl = data.results.map(item => item.url)
-      return pokemonUrl;
-    })
+//Funcion que hace la peticion de todos los Pokemones
+const getPokemons = async () => {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon`, { method: 'GET' })
+  const data = await response.json()
+  const pokemonUrl = data.results.map(item => item.url)
+  return pokemonUrl
 }
 
+//Funcion que crea el arreglo con los objetos de cada Pokemon
 export const arrayPokemonData = async () => {
   const pokemonUrl = await getPokemons();
   const pokemonData = await Promise.all(
@@ -20,7 +21,8 @@ export const arrayPokemonData = async () => {
   return pokemonData
 }
 
-export const handleSearch = async (searchPokemon, setInfo) => {
+//Funcion que realiza la consulta de un unico Pokemon
+export const getSearchPokemon = async (searchPokemon, setInfo) => {
 if(searchPokemon === ""){
   alert("Ingrese nombre o numero del Pokemon que desea consultar")
 } else{
@@ -36,9 +38,35 @@ if(searchPokemon === ""){
 }
 }
 
-export const listTypePokemon = async () => {
+//Funcion que enlista los tipos de Pokemon
+export const getListTypePokemon = async () => {
   const response = await fetch(`https://pokeapi.co/api/v2/type/`, {method: 'GET'})
-    const data = await response.json()
+  const data = await response.json()
       .then(data => data.results)
     return data
 }
+
+//Funcion que filtra por tipo de Pokemon
+export const getTypeSelect = async (selectValue, setInfo) => {
+  if(selectValue === ""){
+    console.log("Seleccione un tipo de Pokemon")
+  } else {
+    const response = await fetch(`https://pokeapi.co/api/v2/type/${selectValue}`, {method: 'GET'})
+    const data = await response.json()
+      .then(async (data) => {
+        const pokemonUrl = data.pokemon.map(item => item.pokemon.url)
+        return pokemonUrl
+      })
+    const pokemonData = await Promise.all(
+      data.map(url => getPokemonData(url))
+    )
+    setInfo(pokemonData)
+}}
+
+// const getMorePokemons = async () => {
+//   const response = await fetch(`https://pokeapi.co/api/v2/pokemon`)
+//   const data = response.json()
+//     .then(data => console.log(data.next))
+// }
+
+// getMorePokemons()
