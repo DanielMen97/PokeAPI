@@ -1,7 +1,11 @@
 import React from 'react'
 import styles from './styles.module.scss'
+import imgDefault from '../assets/img/favicon.png'
 
 const CardPokemon = ({pokemon}) => {
+
+  const imgPokemon = (pokemon.sprites.other.dream_world.front_default) 
+  ? pokemon.sprites.other.dream_world.front_default : imgDefault
 
   return (
     <div className={styles.cardContent}>
@@ -9,7 +13,7 @@ const CardPokemon = ({pokemon}) => {
         <img className={styles.logoPokeBall} src='./src/assets/img/nofound.png'/>
         <h1 className={styles.namePokemon}>{pokemon.name}</h1>   
       </header>
-      <img className={styles.imagePokemon} src={pokemon.sprites.other.dream_world.front_default} />
+      <img className={styles.imagePokemon} src={imgPokemon} />
       <p className={styles.infoPokedex}>
         #{pokemon.id} height: {pokemon.height / 10}m weight: {pokemon.weight / 10}kg
       </p>

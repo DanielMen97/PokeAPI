@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import styles from './App.module.scss'
 import CardPokemon from './components/cardPokemon'
-import { arrayPokemonData, getSearchPokemon, getListTypePokemon, getTypeSelect} from './services/services'
+import { getAllPokemon, getSearchPokemon, getListTypePokemon, getTypeSelect} from './services/services'
 
 const App = () => {
 
@@ -9,20 +9,8 @@ const App = () => {
   const [searchPokemon, setSearchPokemon] = useState("")
   const [optionsSelect, setOptionsSelect] = useState([])
   const [selectValue, setSelectValue] = useState("")
-  const [homeBack, setHomeBack] = useState(false)
-
-  useEffect(() => {
-    const getArrayPokemon = async () => {
-      const pokemonData = await arrayPokemonData()
-      setInfo(pokemonData)
-    }
-    getArrayPokemon();
-    const getOptionsSelect = async () => {
-      const listType = await getListTypePokemon()
-      setOptionsSelect(listType)
-    }
-    getOptionsSelect();
-  }, [homeBack])
+  const [back, setBack] = useState(false)
+  const [offset, setOffset] = useState(0)
 
   const handleInput = (event) => {
     const textPokemon = event.target.value
@@ -31,7 +19,24 @@ const App = () => {
   const handleSelect = (event) => {
     setSelectValue(event.target.value)
   }
+  const handleLoadMore = () => {
+    setOffset(offset + 20)
+  }
+  const handleHomeBack = () => {
+    setInfo([]);
+    setOffset(0);
+    setBack(!back);
+  }
 
+  useEffect(() => {
+    getAllPokemon(info, setInfo, offset)
+    const getOptionsSelect = async () => {
+      const listType = await getListTypePokemon()
+      setOptionsSelect(listType)
+    }
+    getOptionsSelect();
+  }, [offset, back])
+  
   return (
     <div className={styles.app}>
       <header className={styles.headerApp}>
@@ -68,8 +73,8 @@ const App = () => {
           ))
         }
       </div>
-      <button className={styles.buttonNav} onClick={() => setHomeBack(!homeBack)}>Volver</button>
-      <button className={styles.buttonNav}>Ver mas Pokemones</button>
+      <button className={styles.buttonNav} onClick={handleHomeBack}>Volver</button>
+      <button className={styles.buttonNav} onClick={handleLoadMore}>Ver mas Pokemones</button>
     </div>
   )
 }

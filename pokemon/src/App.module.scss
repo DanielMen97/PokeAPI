@@ -58,4 +58,18 @@ body{
     background-color: white;
     border-radius: 20px;
   }
-}
+
+  .buttonNav{
+    background-color: #0d6efd;
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    color: white;
+    font-size: 17px;
+
+    &:hover{
+      background-color: #4a92fe;
+    }
+}}

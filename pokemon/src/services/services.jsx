@@ -1,24 +1,14 @@
-//Funcion retorna la info de cada Pokemon
-const getPokemonData = async (url) => {
-  const response = await fetch(url, { method: 'GET' })
-  return await response.json()
-}
-
-//Funcion que hace la peticion de todos los Pokemones
-const getPokemons = async () => {
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon`, { method: 'GET' })
+//Funcion llamar 20 pokemones
+export const getAllPokemon = async (info, setInfo, offset) => {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`)
   const data = await response.json()
-  const pokemonUrl = data.results.map(item => item.url)
-  return pokemonUrl
-}
-
-//Funcion que crea el arreglo con los objetos de cada Pokemon
-export const arrayPokemonData = async () => {
-  const pokemonUrl = await getPokemons();
-  const pokemonData = await Promise.all(
-    pokemonUrl.map(url => getPokemonData(url))
-  )
-  return pokemonData
+  const promises = data.results.map( async (item) => {
+    const response = await fetch(item.url)
+    const data = response.json()
+    return data
+  })
+  const results = await Promise.all(promises)
+  setInfo([...info, ...results])
 }
 
 //Funcion que realiza la consulta de un unico Pokemon
@@ -35,8 +25,7 @@ if(searchPokemon === ""){
     } catch (error) {
       alert("El Pokemon no existe")
     }
-}
-}
+}}
 
 //Funcion que enlista los tipos de Pokemon
 export const getListTypePokemon = async () => {
@@ -49,7 +38,7 @@ export const getListTypePokemon = async () => {
 //Funcion que filtra por tipo de Pokemon
 export const getTypeSelect = async (selectValue, setInfo) => {
   if(selectValue === ""){
-    console.log("Seleccione un tipo de Pokemon")
+    alert("Seleccione un tipo de Pokemon")
   } else {
     const response = await fetch(`https://pokeapi.co/api/v2/type/${selectValue}`, {method: 'GET'})
     const data = await response.json()
@@ -58,15 +47,11 @@ export const getTypeSelect = async (selectValue, setInfo) => {
         return pokemonUrl
       })
     const pokemonData = await Promise.all(
-      data.map(url => getPokemonData(url))
+      data.map( async(url) => {
+        const response = await fetch(url)
+        const data = await response.json()
+        return data
+      })
     )
-    setInfo(pokemonData)
+    setInfo(pokemonData)    
 }}
-
-// const getMorePokemons = async () => {
-//   const response = await fetch(`https://pokeapi.co/api/v2/pokemon`)
-//   const data = response.json()
-//     .then(data => console.log(data.next))
-// }
-
-// getMorePokemons()
