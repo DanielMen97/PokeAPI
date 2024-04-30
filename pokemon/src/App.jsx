@@ -2,6 +2,8 @@ import { React, useEffect, useState } from 'react'
 import styles from './App.module.scss'
 import CardPokemon from './components/cardPokemon'
 import { getAllPokemon, getSearchPokemon, getListTypePokemon, getTypeSelect} from './services/services'
+import Button from './components/shared/button/button'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
 const App = () => {
 
@@ -11,6 +13,7 @@ const App = () => {
   const [selectValue, setSelectValue] = useState("")
   const [back, setBack] = useState(false)
   const [offset, setOffset] = useState(0)
+  const [showButton, setShowButton] = useState(false)
 
   const handleInput = (event) => {
     const textPokemon = event.target.value
@@ -22,10 +25,11 @@ const App = () => {
   const handleLoadMore = () => {
     setOffset(offset + 20)
   }
-  const handleHomeBack = () => {
+  const handleBack = () => {
     setInfo([]);
     setOffset(0);
     setBack(!back);
+    setShowButton(!showButton)
   }
 
   useEffect(() => {
@@ -43,7 +47,7 @@ const App = () => {
         <img className={styles.tittle} src='.\src\assets\img\logo.png' />
         <div className={styles.inputContainer}>
           <input className={styles.searchPokemon} placeholder='Buscar Pokemon...' onChange={handleInput}/>
-          <button className={styles.buttonSearch} onClick={() =>{getSearchPokemon(searchPokemon, setInfo)}}>
+          <button className={styles.buttonSearch} onClick={() =>{getSearchPokemon(searchPokemon, setInfo, setShowButton)}}>
             <img style={{width: '20px'}} src='.\src\assets\img\search.svg'/>
           </button>
         </div>
@@ -60,7 +64,7 @@ const App = () => {
             ))
           }
         </select>
-        <button className={styles.buttonSearch} onClick={() =>(getTypeSelect(selectValue, setInfo))}>
+        <button className={styles.buttonSearch} onClick={() =>(getTypeSelect(selectValue, setInfo, setShowButton))}>
           <img style={{width: '20px'}} src='.\src\assets\img\search.svg'  />
         </button>
         </div>
@@ -73,8 +77,12 @@ const App = () => {
           ))
         }
       </div>
-      <button className={styles.buttonNav} onClick={handleHomeBack}>Volver</button>
-      <button className={styles.buttonNav} onClick={handleLoadMore}>Ver mas Pokemones</button>
+      {
+        (showButton) ?  
+        <button className={styles.buttonNav} onClick={handleBack}>Volver</button> : 
+        <button className={styles.buttonNav} onClick={handleLoadMore}>Ver mas Pokemones</button>
+      }
+      <Button text="Hola" icon={{active: true, value: {faCheck}}}></Button>
     </div>
   )
 }

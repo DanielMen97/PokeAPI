@@ -12,7 +12,7 @@ export const getAllPokemon = async (info, setInfo, offset) => {
 }
 
 //Funcion que realiza la consulta de un unico Pokemon
-export const getSearchPokemon = async (searchPokemon, setInfo) => {
+export const getSearchPokemon = async (searchPokemon, setInfo, setShowButton) => {
 if(searchPokemon === ""){
   alert("Ingrese nombre o numero del Pokemon que desea consultar")
 } else{
@@ -22,6 +22,7 @@ if(searchPokemon === ""){
       const pokemon = []
       pokemon.push(data)
       setInfo(pokemon)
+      setShowButton(prev => !prev)
     } catch (error) {
       alert("El Pokemon no existe")
     }
@@ -36,7 +37,7 @@ export const getListTypePokemon = async () => {
 }
 
 //Funcion que filtra por tipo de Pokemon
-export const getTypeSelect = async (selectValue, setInfo) => {
+export const getTypeSelect = async (selectValue, setInfo, setShowButton) => {
   if(selectValue === ""){
     alert("Seleccione un tipo de Pokemon")
   } else {
@@ -53,5 +54,6 @@ export const getTypeSelect = async (selectValue, setInfo) => {
         return data
       })
     )
-    setInfo(pokemonData)    
+    setInfo(pokemonData)
+    setShowButton(prev => !prev)    
 }}

@@ -11,6 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    height: 60px;
 
     .namePokemon{
       font-size: 20px;
@@ -34,13 +35,13 @@
   .infoPokedex{
     position: relative;
     top: -18px;
-    right: -16px;
+    right: -10px;
     width: fit-content;
-    font-size: 11px;
+    font-size: 10px;
     background-color: rgb(211, 211, 211);
     font-style: italic;
     text-align: center;
-    min-width: 190px;
+    min-width: 200px;
     padding: 0 10px;
     border-radius: 5px;
   }
