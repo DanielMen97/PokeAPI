@@ -29,11 +29,10 @@ if(searchPokemon === ""){
 }}
 
 //Funcion que enlista los tipos de Pokemon
-export const getListTypePokemon = async () => {
+export const getListTypePokemon = async (setOptionsSelect) => {
   const response = await fetch(`https://pokeapi.co/api/v2/type/`, {method: 'GET'})
   const data = await response.json()
-      .then(data => data.results)
-    return data
+      .then(async (data) => setOptionsSelect(data.results))
 }
 
 //Funcion que filtra por tipo de Pokemon

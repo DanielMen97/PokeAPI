@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './styles.module.scss'
-import imgDefault from '../assets/img/imgDefault.png'
+import imgDefault from '../../assets/img/imgDefault.png'
 
 const CardPokemon = ({pokemon}) => {
 

@@ -5,6 +5,9 @@
   border: none;
   cursor: pointer;
   transition: 0.3s;
+  display: flex;
+  gap: 5px;
+  align-items: center;
 
   &:hover{
     background-color: #4a92fe;
@@ -17,5 +20,6 @@
 
   .buttonIcon{
     width: 20px;
+    color: white;
   }
 }
