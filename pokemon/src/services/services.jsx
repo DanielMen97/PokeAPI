@@ -56,3 +56,16 @@ export const getTypeSelect = async (selectValue, setInfo, setShowButton) => {
     setInfo(pokemonData)
     setShowButton(prev => !prev)    
 }}
+
+//Funcion para llamar la descripcion del pokemon
+export const getDescriptionPokemon = async(id) => {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+  const data = await response.json()
+    .then(data => data.flavor_text_entries.map(item => {
+      if(item.language.name === "es"){
+        console.log(item.flavor_text)
+      }
+    }))
+}
+
+getDescriptionPokemon(1)

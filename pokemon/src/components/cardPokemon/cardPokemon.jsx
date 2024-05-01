@@ -11,7 +11,7 @@ const CardPokemon = ({pokemon}) => {
   ? pokemon.sprites.other.dream_world.front_default : imgDefault
 
   return (
-    <div className={styles.cardContent} onClick={() => setActiveModal(true)}>
+    <div className={styles.cardContent} onClick={() => setActiveModal(!activeModal)}>
       <header className={styles.headerContainer}>
         <img className={styles.logoPokeBall} src='./src/assets/img/nofound.png'/>
         <h1 className={styles.namePokemon}>{pokemon.name}</h1>   
