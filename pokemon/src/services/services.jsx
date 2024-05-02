@@ -63,9 +63,8 @@ export const getDescriptionPokemon = async(id) => {
   const data = await response.json()
     .then(data => data.flavor_text_entries.map(item => {
       if(item.language.name === "es"){
-        console.log(item.flavor_text)
+       return item.flavor_text
       }
     }))
+     return (data.filter(item => item !== undefined))
 }
-
-getDescriptionPokemon(1)

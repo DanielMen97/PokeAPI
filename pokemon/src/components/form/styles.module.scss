@@ -1,0 +1,30 @@
+.formPokemon{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: flex-start;
+
+  .inputContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    .searchPokemon, .selectType{
+      border: none;
+      padding: 10px 15px;
+      outline: none;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+
+    .searchPokemon{
+      width: 278px;
+    }
+
+    .selectType{
+      text-transform: capitalize;
+    }
+  }
+}
+

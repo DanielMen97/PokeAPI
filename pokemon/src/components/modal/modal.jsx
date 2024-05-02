@@ -1,27 +1,62 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { getDescriptionPokemon } from '../../services/services'
 
 const Modal = ({pokemon, activeModal, setActiveModal}) => {
+
+  const [description, setDescription] = useState([])
+
+  useEffect(()=> {
+    const pokeDescription = async () => {
+      const pokemonDes = await getDescriptionPokemon(pokemon.id)
+      setDescription(pokemonDes)
+    }
+    pokeDescription()
+  }, [])
+  
   return (   
     <>
       {activeModal &&(
         <main className={styles.overlay}>
           <div className={styles.modalContent}>
-            <header>
+            <header className={styles.headerModal}>
               <h1>#{pokemon.id}</h1>
-              <FontAwesomeIcon 
+              <FontAwesomeIcon
+                className={styles.iconClose} 
                 icon="fa-solid fa-xmark" 
                 size='2xl' 
-                onClick={() => {setActiveModal(!activeModal)}}/>
+                onClick={() => {setActiveModal(false)}}/>
             </header>
-            <section>
-            <article>
-              <h2>{pokemon.name}</h2>
-              <img src={pokemon.sprites.other.dream_world.front_default} />
-              <p>Casi incapaz de moverse, este Pokémon solo puede endurecer su caparazón para protegerse.</p>
+            <section className={styles.sectionModal}>
+            <article className={styles.articleModal}>
+              <h2 className={styles.pokemonName}>{pokemon.name}</h2>
+              <img className={styles.imgPokemon} src={pokemon.sprites.other["official-artwork"].front_default} />
+              <p className={styles.infoPokemon}>{description.length !== 0 ? description[0] : "Sin descripcion"}</p>
             </article>
-            <aside>
+            <aside className={styles.asideModal}>
+              <ul className={styles.listStats}>
+                {
+                  pokemon.stats.map((item, id) => {
+                    return(
+                    <li key={id} className={styles.statPokemon}>
+                     <p className={styles.statName}>{item.stat.name} :</p>
+                     <h2 className={styles.statNumber}>{item.base_stat}</h2>
+                    </li>)
+                  })
+                }
+                
+              </ul>
+              <ul className={styles.listType}>
+          {
+            pokemon.types.map((item, id) => (
+              <li className={styles.itemType} key={id}>
+                <img className={styles.logoType} src={`./src/assets/img/icon/${item.type.name}.svg`} />
+                <p>{item.type.name}</p>
+              </li>
+            ))
+          }
+        </ul>
             </aside>
             </section>     
           </div>

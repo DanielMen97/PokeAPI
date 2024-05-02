@@ -12,6 +12,7 @@ const Form = ({ setInfo, setShowButton }) => {
   const handleInput = (event) => {
     const textPokemon = event.target.value
     setSearchPokemon(textPokemon.toLowerCase())
+    
   }
   const handleSelect = (event) => {
     setSelectValue(event.target.value)
@@ -20,7 +21,7 @@ const Form = ({ setInfo, setShowButton }) => {
     getListTypePokemon(setOptionsSelect);
   }, [])
   return (
-    <div>
+    <div className={styles.formPokemon}>
       <div className={styles.inputContainer}>
         <input className={styles.searchPokemon} placeholder='Buscar Pokemon...' onChange={handleInput} />
         <Button
@@ -29,8 +30,8 @@ const Form = ({ setInfo, setShowButton }) => {
           onClick={() => { getSearchPokemon(searchPokemon, setInfo, setShowButton) }} />
       </div>
       <div className={styles.inputContainer}>
-        <select onChange={handleSelect}>
-          <option hidden defaultValue={null}>
+        <select className={styles.selectType} onChange={handleSelect}>
+          <option className={styles.optionDefault} hidden defaultValue={null}>
             Selecione el tipo de Pokemon:
           </option>
           {
