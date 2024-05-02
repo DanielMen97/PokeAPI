@@ -29,7 +29,7 @@ const App = () => {
   return (
     <div className={styles.app}>
       <header className={styles.headerApp}>
-        <img className={styles.tittle} src='.\src\assets\img\logo.png' />
+        <img className={styles.tittle} src='.\src\assets\img\logo.png' onClick={handleBack}/>
         <Form setInfo={setInfo} setShowButton={setShowButton}></Form>
       </header>
       <div className={styles.pokeContainer}>

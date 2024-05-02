@@ -1,7 +1,7 @@
 @import "./styles/global.scss";
 
 body{
-  background-color: #f85032;
+  background-color: #f37b66;
   font-family: $fontPrimary;
 }
 .app{
@@ -19,6 +19,7 @@ body{
 
     .tittle{
       width: 400px;
+      cursor: pointer;
     }
   }
   
