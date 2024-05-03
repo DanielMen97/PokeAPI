@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import styles from './App.module.scss';
 import CardPokemon from './components/cardPokemon/cardPokemon';
-import { getAllPokemon, getArrayPokemons } from './services/services';
+import { getArrayPokemons } from './services/services';
 import Button from './components/shared/button/button';
 import Form from './components/form/form';
 
@@ -24,11 +24,10 @@ const App = () => {
 
   useEffect(() => {
     const pokemons = async () => {
-      const results = await getArrayPokemons();
+      const results = await getArrayPokemons(offset);
       setInfo([...info, ...results])
     }
     pokemons();
-    getAllPokemon(offset);
   }, [offset, back])
   
   return (

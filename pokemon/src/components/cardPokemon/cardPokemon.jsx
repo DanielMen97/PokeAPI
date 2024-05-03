@@ -32,7 +32,11 @@ const CardPokemon = ({ pokemon }) => {
           }
         </ul>
       </div>
-      <Modal pokemon={pokemon} activeModal={activeModal} setActiveModal={setActiveModal} />
+      {activeModal && (
+        <Modal pokemon={pokemon} activeModal={activeModal} setActiveModal={setActiveModal} />
+      )
+      }
+      
     </>
 
   )

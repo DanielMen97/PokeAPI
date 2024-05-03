@@ -5,9 +5,10 @@ export const getAllPokemon = async (offset) => {
   return data
 }
 
-export const getArrayPokemons = async () => {
-  const promises = await getAllPokemon()
-  const arrayPokemons = promises.results.map( async (item) => {
+//Funcion que retorna un arreglo con los pokemones solicitados
+export const getArrayPokemons = async (offset) => {
+  const pokemonData = await getAllPokemon(offset)
+  const arrayPokemons = pokemonData.results.map( async (item) => {
     const response = await fetch(item.url)
     const data = await response.json()
     return data
@@ -15,25 +16,6 @@ export const getArrayPokemons = async () => {
   const results = await Promise.all(arrayPokemons)
   return results
 }
-
-getArrayPokemons()
-
-//Funcion que realiza la consulta de un unico Pokemon
-export const getSearchPokemon = async (searchPokemon, setInfo, setShowButton) => {
-if(searchPokemon === ""){
-  alert("Ingrese nombre o numero del Pokemon que desea consultar")
-} else{
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchPokemon}`, { method: 'GET' })
-    try {
-      const data = await response.json()
-      const pokemon = []
-      pokemon.push(data)
-      setInfo(pokemon)
-      setShowButton(prev => !prev)
-    } catch (error) {
-      alert("El Pokemon no existe")
-    }
-}}
 
 //Funcion que enlista los tipos de Pokemon
 export const getListTypePokemon = async (setOptionsSelect) => {
@@ -67,13 +49,18 @@ export const getTypeSelect = async (selectValue, setInfo, setShowButton) => {
 //Funcion para llamar la descripcion del pokemon
 export const getDescriptionPokemon = async(id) => {
   const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
-  const data = await response.json()
+  try {
+    const data = await response.json()
     .then(data => data.flavor_text_entries.map(item => {
       if(item.language.name === "es"){
        return item.flavor_text
       }
     }))
-     return (data.filter(item => item !== undefined))
+      return (data.filter(item => item !== undefined))
+  } catch (error) {
+    return ["Sin Descripción"]
+  }
+  
 }
 
 //Funcion llama todos los pokemones
@@ -83,23 +70,21 @@ const getAllSearchPokemons = async() => {
   return data.results
 }
 
-//Funcion que filtra por el input optimizado
- export const filterPokemon = async (searchPokemon) => {
-  if(typeof searchPokemon === "number"){
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchPokemon}`, { method: 'GET' })
-    try {
-      const data = await response.json()
-      const pokemon = []
-      pokemon.push(data)
-      return pokemon
-    } catch (error) {
-      alert("El Pokemon no existe")
-    }
-  } else {
-    const arrayPokemons = await getAllSearchPokemons()
-   const pokemonData = arrayPokemons.filter(item => item.name.includes(searchPokemon))
-                                    // .map( async item => )
-
+//Funcion que filtra por el input
+ const filterPokemon = async (searchPokemon) => {
+   const arrayPokemons = await getAllSearchPokemons()
+   const pokemonData = arrayPokemons.filter(item => item.name.includes(searchPokemon))  
+    return pokemonData
   }
+
+//Funcion retorna resultados de la busqueda
+export const resultsFilterPokemon = async (searchPokemon) => {
+  const pokemonData = await filterPokemon(searchPokemon)
+  const arrayPokemons = pokemonData.map( async (item) => {
+    const response = await fetch(item.url)
+    const data = await response.json()
+    return data
+  })
+  const results = await Promise.all(arrayPokemons)
+  return results
 }
-filterPokemon("pika")
