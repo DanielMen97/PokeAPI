@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { /*getSearchPokemon,*/ getTypeSelect, getListTypePokemon, resultsFilterPokemon } from '../../services/services';
+import { getTypeSelect, getListTypePokemon, resultsFilterPokemon } from '../../services/services';
 import Button from '../shared/button/button';
 import styles from './styles.module.scss'
 
@@ -13,11 +13,10 @@ const Form = ({ setInfo, setShowButton }) => {
     const textPokemon = event.target.value
     setSearchPokemon(textPokemon.toLowerCase())
   }
-  const handleOnClick = async () => {
+  const handleOnClickInput = async () => {
     const pokemon = await resultsFilterPokemon(searchPokemon)
-    setTimeout(() => {
       setInfo(pokemon)
-    }, 1000);
+      setShowButton(true)
   }
   const handleSelect = (event) => {
     setSelectValue(event.target.value)
@@ -33,7 +32,7 @@ const Form = ({ setInfo, setShowButton }) => {
         <Button
           text="Buscar"
           icon='fa-solid fa-magnifying-glass'
-          onClick={handleOnClick} />
+          onClick={handleOnClickInput} />
       </div>
       <div className={styles.inputContainer}>
         <select className={styles.selectType} onChange={handleSelect}>
@@ -51,7 +50,7 @@ const Form = ({ setInfo, setShowButton }) => {
         <Button
           text="Buscar"
           icon='fa-solid fa-magnifying-glass'
-          onClick={() => (getTypeSelect(selectValue, setInfo, setShowButton))} />
+          onClick={() => getTypeSelect(selectValue, setInfo, setShowButton)} />
       </div>
     </div>
   )

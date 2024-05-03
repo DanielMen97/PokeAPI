@@ -19,7 +19,7 @@ const App = () => {
     setInfo([]);
     setOffset(0);
     setBack(!back);
-    setShowButton(!showButton)
+    setShowButton(false)
   }
 
   useEffect(() => {
