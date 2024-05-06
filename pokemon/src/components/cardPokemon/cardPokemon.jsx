@@ -1,10 +1,15 @@
 import styles from './styles.module.scss'
 import Modal from '../modal/modal'
 import { useCardPokemon } from '../../hooks/useCardPokemon'
+import imgDefault from '../../assets/img/imgDefault.png'
+import PropTypes from 'prop-types'
 
 const CardPokemon = ({pokemon}) => {
 
-  const {activeModal, imgPokemon, handleOpenModal} = useCardPokemon()
+  const { activeModal, handleOpenModal} = useCardPokemon()
+
+  const imgPokemon = (pokemon.sprites.other.dream_world.front_default)
+  ? pokemon.sprites.other.dream_world.front_default : imgDefault
 
   return (
     <>
@@ -29,12 +34,14 @@ const CardPokemon = ({pokemon}) => {
         </ul>
       </div>
       {
-        activeModal && <Modal pokemon={pokemon} handleOpenModal={handleOpenModal} />
-      }
-      
+        activeModal && <Modal pokemon={pokemon} handleOpenModal={handleOpenModal}/>
+      }     
     </>
-
   )
+}
+
+CardPokemon.propTypes = {
+  pokemon: PropTypes.object.isRequired
 }
 
 export default CardPokemon

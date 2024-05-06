@@ -56,7 +56,12 @@ export const getDescriptionPokemon = async(id) => {
        return item.flavor_text
       }
     }))
-      return (data.filter(item => item !== undefined))
+      const prueba = data.filter(item => item !== undefined)
+      if(prueba.length === 0){
+        return  ["Sin Descripción"]
+      } else{
+        return prueba
+      }      
   } catch (error) {
     return ["Sin Descripción"]
   }

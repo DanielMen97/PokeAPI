@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getArrayPokemons } from './services/services';
+import { getArrayPokemons } from '../services/services'
 
 export function useApp() {
 
@@ -8,9 +8,9 @@ export function useApp() {
   const [offset, setOffset] = useState(0)
   const [showButton, setShowButton] = useState(false)
 
-  const isSetInfo = () => setInfo()
+  const isSetInfo = (pokemon) => setInfo(pokemon)
 
-  const isSetShowButton = () => setShowButton()
+  const isSetShowButton = (state) => setShowButton(state)
 
   const handleLoadMore = () => {
     setOffset(offset + 20)

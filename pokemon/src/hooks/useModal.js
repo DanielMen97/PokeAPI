@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { getDescriptionPokemon } from '../services/services'
 
-export function useModa() {
+export function useModal(id) {
 
   const [description, setDescription] = useState([])
 
   useEffect(() => {
     const pokeDescription = async () => {
-      const pokemonDes = await getDescriptionPokemon(pokemon.id);
+      const pokemonDes = await getDescriptionPokemon(id);
         setDescription(pokemonDes)
     }
     pokeDescription()

@@ -1,10 +1,11 @@
 import styles from './styles.module.scss'
+import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useCardPokemon } from '../../hooks/useCardPokemon'
+import { useModal } from '../../hooks/useModal'
 
-const Modal = ({pokemon}) => {
+const Modal = ({pokemon, handleOpenModal}) => {
 
-  const {handleOpenModal} = useCardPokemon()
+  const { description } = useModal(pokemon.id)
 
   return (
     <main className={styles.overlay}>
@@ -15,7 +16,7 @@ const Modal = ({pokemon}) => {
             className={styles.iconClose}
             icon="fa-solid fa-xmark"
             size='2xl'
-            onClick={() => {handleOpenModal}} />
+            onClick={handleOpenModal} />
         </header>
         <section className={styles.sectionModal}>
           <article className={styles.articleModal}>
@@ -34,7 +35,6 @@ const Modal = ({pokemon}) => {
                     </li>)
                 })
               }
-
             </ul>
             <ul className={styles.listType}>
               {
@@ -51,6 +51,11 @@ const Modal = ({pokemon}) => {
       </div>
     </main>
   )
+}
+
+Modal.propTypes = {
+  pokemon: PropTypes.object.isRequired,
+  handleOpenModal: PropTypes.func.isRequired
 }
 
 export default Modal

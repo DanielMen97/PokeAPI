@@ -1,29 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { getTypeSelect, getListTypePokemon, resultsFilterPokemon } from '../../services/services';
+import { useForm } from '../../hooks/useForm';
 import Button from '../shared/button/button';
 import styles from './styles.module.scss'
+import PropTypes from 'prop-types'
 
-const Form = ({ setInfo, setShowButton }) => {
+const Form = ({setInfo, setShowButton}) => {
 
-  const [searchPokemon, setSearchPokemon] = useState("")
-  const [optionsSelect, setOptionsSelect] = useState([])
-  const [selectValue, setSelectValue] = useState("")
-
-  const handleInput = (event) => {
-    const textPokemon = event.target.value
-    setSearchPokemon(textPokemon.toLowerCase())
-  }
-  const handleOnClickInput = async () => {
-    const pokemon = await resultsFilterPokemon(searchPokemon)
-      setInfo(pokemon)
-      setShowButton(true)
-  }
-  const handleSelect = (event) => {
-    setSelectValue(event.target.value)
-  }
-  useEffect(() => {
-    getListTypePokemon(setOptionsSelect);
-  }, [])
+  const { handleTypeSelect, handleOnClickInput, handleSelect, optionsSelect, handleInput } = useForm(setInfo, setShowButton)
 
   return (
     <div className={styles.formPokemon}>
@@ -50,10 +32,15 @@ const Form = ({ setInfo, setShowButton }) => {
         <Button
           text="Buscar"
           icon='fa-solid fa-magnifying-glass'
-          onClick={() => getTypeSelect(selectValue, setInfo, setShowButton)} />
+          onClick={handleTypeSelect} />
       </div>
     </div>
   )
+}
+
+Form.propTypes = {
+  setInfo: PropTypes.func.isRequired, 
+  setShowButton: PropTypes.func.isRequired
 }
 
 export default Form
