@@ -1,18 +1,14 @@
-import React, { useState } from 'react'
 import styles from './styles.module.scss'
-import imgDefault from '../../assets/img/imgDefault.png'
 import Modal from '../modal/modal'
+import { useCardPokemon } from '../../hooks/useCardPokemon'
 
-const CardPokemon = ({ pokemon }) => {
+const CardPokemon = ({pokemon}) => {
 
-  const [activeModal, setActiveModal] = useState(false)
-
-  const imgPokemon = (pokemon.sprites.other.dream_world.front_default)
-    ? pokemon.sprites.other.dream_world.front_default : imgDefault
+  const {activeModal, imgPokemon, handleOpenModal} = useCardPokemon()
 
   return (
     <>
-      <div className={styles.cardContent} onClick={() => setActiveModal(!activeModal)}>
+      <div className={styles.cardContent} onClick={handleOpenModal}>
         <header className={styles.headerContainer}>
           <img className={styles.logoPokeBall} src='./src/assets/img/nofound.png' />
           <h1 className={styles.namePokemon}>{pokemon.name}</h1>
@@ -32,9 +28,8 @@ const CardPokemon = ({ pokemon }) => {
           }
         </ul>
       </div>
-      {activeModal && (
-        <Modal pokemon={pokemon} activeModal={activeModal} setActiveModal={setActiveModal} />
-      )
+      {
+        activeModal && <Modal pokemon={pokemon} handleOpenModal={handleOpenModal} />
       }
       
     </>

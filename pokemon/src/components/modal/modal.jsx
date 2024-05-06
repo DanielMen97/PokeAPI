@@ -1,22 +1,10 @@
-import React, { useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { getDescriptionPokemon } from '../../services/services'
+import { useCardPokemon } from '../../hooks/useCardPokemon'
 
-const Modal = ({ pokemon, activeModal, setActiveModal }) => {
+const Modal = ({pokemon}) => {
 
-  const [description, setDescription] = useState([])
-
-  useEffect(() => {
-    const pokeDescription = async () => {
-      const pokemonDes = await getDescriptionPokemon(pokemon.id)
-        if(pokemonDes.length === 0){
-          setDescription(["Sin descrpción"])
-        }
-        setDescription(pokemonDes)
-    }
-    pokeDescription()
-  }, [])
+  const {handleOpenModal} = useCardPokemon()
 
   return (
     <main className={styles.overlay}>
@@ -27,7 +15,7 @@ const Modal = ({ pokemon, activeModal, setActiveModal }) => {
             className={styles.iconClose}
             icon="fa-solid fa-xmark"
             size='2xl'
-            onClick={() => { setActiveModal(false) }} />
+            onClick={() => {handleOpenModal}} />
         </header>
         <section className={styles.sectionModal}>
           <article className={styles.articleModal}>
